@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'JunigardenSerif';
-  src: url('../fonts/JunigardenSerif.woff') format('woff');
+  src: url('./fonts/JunigardenSerif.woff') format('woff');
 
 }
 

@@ -1,8 +1,16 @@
+import Footer from "@/components/Footer";
+import Gallery from "@/components/Gallery";
+import Hero from "@/components/Hero";
+import MapComponent from "@/components/MapComponent";
 
 
 export default function Home() {
   return (
-    <h1>hola</h1>
-   
+    <div>
+      <Hero />
+      <Gallery />
+      <MapComponent />
+      <Footer />
+    </div>
   );
 }
