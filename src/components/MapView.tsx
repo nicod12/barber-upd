@@ -11,96 +11,68 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 
-type MapType = "roadmap" | "satellite" | "hybrid" | "terrain";
-
-type MapLocation = LatLngLiteral & { id: string };
-
-type MapProps = {
-  center: LatLngLiteral;
-  locations: MapLocation[];
+// Coordenadas de Alsina 2928, Olavarría.
+const ALSINA_COORDS: LatLngLiteral = {
+  lat: -36.89259,
+  lng: -60.32254,
 };
 
-const SelectedLocation = ({ center }: { center: LatLngLiteral }) => {
-  const map = useMap();
-  map.panTo(center, { animate: true });
-  return null;
-};
-
-export const Map: React.FC<MapProps> = memo(({ center, locations }) => {
-  const [mapType, setMapType] = useState<MapType>("roadmap");
-  const [selectedLocation, setSelectedLocation] = useState<
-    MapLocation | undefined
-  >();
-
-  const getUrl = () => {
-    const mapTypeUrls: Record<MapType, string> = {
-      roadmap: "http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}",
-      satellite: "http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}",
-      hybrid: "http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}",
-      terrain: "http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}",
-    };
-    return mapTypeUrls[mapType];
-  };
+const MapView = memo(() => {
+  const [selectedLocation, setSelectedLocation] = useState<LatLngLiteral | null>(
+    null
+  );
 
   const mapMarkIcon = new Icon({
     iconUrl: "map-marker.png",
     iconSize: [47, 55],
   });
+
   const mapMarkActiveIcon = new Icon({
     iconUrl: "active-map-marker.png",
     iconSize: [57, 65],
   });
 
-  const renderMarks = () => {
-    return locations.map((location) => (
-      <div key={location.id}>
-        <Marker
-          icon={
-            location.id === selectedLocation?.id
-              ? mapMarkActiveIcon
-              : mapMarkIcon
-          }
-          position={{ lat: location.lat, lng: location.lng }}
-          eventHandlers={{
-            click: () => {
-              setSelectedLocation(location);
-            },
-          }}
-        />
-      </div>
-    ));
+  const renderMarker = () => (
+    <Marker
+      icon={selectedLocation ? mapMarkActiveIcon : mapMarkIcon}
+      position={ALSINA_COORDS}
+      eventHandlers={{
+        click: () => setSelectedLocation(ALSINA_COORDS),
+      }}
+    />
+  );
+
+  const SelectedLocation = ({ center }: { center: LatLngLiteral }) => {
+    const map = useMap();
+    map.panTo(center, { animate: true });
+    return null;
   };
 
   return (
-    <>
-      <div
-        style={{
-          width: "80%",
-          height: "80vh",
-          borderRadius: "20px",
-          overflow: "hidden",
-        }}
+    <div
+      style={{
+        width: "80%",
+        height: "80vh",
+        borderRadius: "20px",
+        overflow: "hidden",
+      }}
+    >
+      <MapContainer
+        center={ALSINA_COORDS}
+        zoom={15}
+        minZoom={5}
+        zoomControl={false}
+        attributionControl={false}
+        style={{ width: "100%", height: "100%" }}
       >
-        <MapContainer
-          center={center}
-          zoom={13}
-          minZoom={5}
-          zoomControl={false}
-          attributionControl={false}
-          style={{ width: "100%", height: "100%" }}
-        >
-          <TileLayer url={getUrl()} />
-          {selectedLocation && <SelectedLocation center={selectedLocation} />}
-          {renderMarks()}
-          <ZoomControl position="topright" />
-        </MapContainer>
-      </div>
-      <div style={{ display: "flex", marginTop: "10px", gap: "20px" }}>
-        <button onClick={() => setMapType("roadmap")}>roadmap</button>
-        <button onClick={() => setMapType("satellite")}>satellite</button>
-        <button onClick={() => setMapType("hybrid")}>hybrid</button>
-        <button onClick={() => setMapType("terrain")}>terrain</button>
-      </div>
-    </>
+        <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+        {selectedLocation && <SelectedLocation center={selectedLocation} />}
+        {renderMarker()}
+        <ZoomControl position="topright" />
+      </MapContainer>
+    </div>
   );
 });
+
+export default MapView;
+
