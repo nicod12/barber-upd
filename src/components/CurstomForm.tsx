@@ -1,4 +1,5 @@
 "use client"
+import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import z from "zod";
@@ -56,7 +57,7 @@ const CustomForm = () => {
 
 
   return (
-    <section className='py-16 md:py-32 flex flex-col lg:flex-row items-center lg:items-start gap-14 justify-center'>
+    <section className='py-16 md:py-32 md:px-24 flex flex-col lg:flex-row items-center lg:items-start gap-14 justify-center'>
       <div>
         <p className="max-w-md md:max-w-3xl px-6 md:px-4 text-center text-[1.5rem] lg:text-[2rem] lg:text-start lg:p-2 bebas-neue-regular">
           ¡No dejes tu look al azar! Reserva tu turno fácilmente en línea y asegúrate de recibir la atención que mereces en el momento que más te convenga. En Tulook barber, tu satisfacción es nuestra prioridad. ¡Te esperamos!

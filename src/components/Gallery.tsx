@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Gallery = () => {
   return (
@@ -35,4 +35,4 @@ const Gallery = () => {
   )
 }
 
-export default Gallery
+export default Gallery;

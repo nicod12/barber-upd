@@ -28,8 +28,9 @@
     "@types/prop-types": "^15.7.13",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8.57.1",
+    "eslint": "^9.13.0",
     "eslint-config-next": "15.0.1",
+    "eslint-plugin-next": "^0.0.0",
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.11.0",
     "postcss": "^8",
@@ -45,7 +46,9 @@
     ],
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
-      "@next/next/no-img-element": "off"
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "react/react-in-jsx-scope": "off"
     }
   }
 }

@@ -1,7 +1,7 @@
 "use client";
-
+import React from "react";
 import { useEffect, useRef } from "react";
-import L, { Map, Icon } from "leaflet";
+import L, { Map } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility"; // Asegura que los íconos se carguen correctamente
@@ -32,7 +32,15 @@ const MapView = ({ center }: MapViewProps) => {
     mapRef.current = map;
   }, [center]);
 
-  return <div id="map" style={{ width: "100%", height: "200px" }} />;
+  return (
+    <div className="flex flex-col items-center justify-center w-full bg-gray-100 py-16 md:py-32">
+      <section className="flex flex-col items-center justify-center px-6 py-5 lg:py-10 lg:max-w-[800px] xl:max-w-[1000px] 2xl:max-w-[1280px] w-full bg-white shadow-lg rounded-lg">
+        <h1 className="text-center text-[3rem] font-bold uppercase m-5 lg:m-10 junigardenSerif text-gray-800" >Ubicación</h1>
+        <div id="map" className="w-full h-[50vh] lg:h-[600px] shadow-black shadow-md rounded-lg overflow-hidden"></div>
+
+      </section>
+    </div>
+  );
 };
 
 export default MapView;
